@@ -1,8 +1,8 @@
 /*============================================================================================================
 Descprition:  Stammdaten Zimmer Guardian
 Author:       Jan Syed
-Date:         27.02.2023
-Version:      V0.1.0
+Date:         01.03.2023
+Version:      V0.1.1
 ============================================================================================================*/
 
 int trigger = 13;
@@ -22,6 +22,8 @@ const int r_led = 10;
 
 bool alarm_ein = false;
 bool alarm_triggered = false;
+
+String passwort = "1234";
 
 
 

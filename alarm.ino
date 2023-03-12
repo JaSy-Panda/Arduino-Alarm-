@@ -1,8 +1,8 @@
 /*============================================================================================================
-Descprition:  Zimmer Guardian
+Descprition:  Aufgabe 5
 Author:       Jan Syed
-Date:         27.02.2023
-Version:      V0.1.0
+Date:         01.03.2023
+Version:      V0.1.1
 ============================================================================================================*/
 
 #include "stammdaten.h"
@@ -107,17 +107,14 @@ void loop() {
       digitalWrite(g_led, LOW);
       tone(buzzer,800);
 
+      passwortEingabe();
+
+      alarm_triggered = false;
+      alarm_ein = false;
+
     }
 
-
-
-
   }
-
-  //Serial.println(alarm_ein);
-
-
-
 
 }
 
@@ -154,16 +151,16 @@ void startupAlarm(){
 
     } */
 
-    tone(buzzer, 300);
+  tone(buzzer, 300);
 
-    delay(100);
+  delay(100);
 
-    tone(buzzer, 800);
-    digitalWrite(g_led, HIGH);
+  tone(buzzer, 800);
+  digitalWrite(g_led, HIGH);
 
-    delay(100);
+  delay(100);
     
-    noTone(buzzer);
+  noTone(buzzer);
 
 
 }
@@ -182,5 +179,81 @@ long getDistance(){
   return entfernung;
 
 }
+
+void passwortEingabe(){
+
+  String eingabe = "";
+  int i = 0; // Variable für die Passwort Länge
+  bool pw_abfrage = true;
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("PW Eingeben");
+
+  while(pw_abfrage){
+    
+    Taste = Tastenfeld.waitForKey();
+
+    if(Taste == '#'){
+
+      if(eingabe == passwort)
+      {
+       pw_abfrage = false;
+
+      }
+      else{
+
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("Falsches Kennwort");
+
+        delay(300);
+
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("PW Eingeben");
+
+        eingabe = "";
+        i = 0;
+
+      }
+
+
+    }
+    else if (Taste == '*')
+    {
+      eingabe = "";
+      i = 0;
+
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("PW Eingeben");
+
+    }
+    else if( Taste == 'A' || Taste == 'B' || Taste == 'C'|| Taste == 'D')
+    {
+      Serial.println("A, B, C oder D ist keine Zahl");
+    }
+    else if( (Taste) && (i < 8) )
+    {
+      eingabe += Taste;
+
+      Serial.println(eingabe);
+
+      lcd.setCursor(i, 1);
+      lcd.print(Taste);
+
+      delay(200);
+      lcd.setCursor(i, 1);
+      lcd.print("*");
+
+      i++;
+
+    }
+
+  }
+
+}
+
 
 
